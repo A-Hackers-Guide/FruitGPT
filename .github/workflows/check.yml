@@ -14,6 +14,6 @@ jobs:
         with:
           node-version: 22
       - run: npm ci --ignore-scripts
-      - run: node --check src/main.js && node --check src/engine/worker.js && node --check src/renderer/app.js
+      - run: for f in src/*.js src/engine/*.js tools/*.js src/renderer/app.js src/renderer/editor.js; do node --check "$f"; done
       - name: Engine tests (tiny synthetic brain, no download)
         run: npm test

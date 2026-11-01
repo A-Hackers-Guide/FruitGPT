@@ -15,12 +15,26 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - run: pip install numpy scipy pandas pyarrow
-      - name: Download and convert the MaleCNS connectome (CC BY 4.0)
+      - run: pip install numpy scipy pandas pyarrow xlrd
+      - name: Male fruit fly, MaleCNS v1.0 (CC BY 4.0)
         run: |
           bash tools/fetch_data.sh raw
           python tools/prepare_data.py --raw raw --out prepared
-          python tools/export_js.py --prepared prepared --out data
+          python tools/export_js.py --prepared prepared --out data/brains/malecns --config src/brains/malecns.json
+          rm -rf raw prepared
+      - name: Female fruit fly brain, FlyWire v783 (CC BY 4.0)
+        run: |
+          bash tools/fetch_flywire.sh raw_flywire
+          python tools/prepare_flywire.py --raw raw_flywire --out prepared_flywire
+          python tools/export_js.py --prepared prepared_flywire --out data/brains/flywire --config src/brains/flywire.json
+          rm -rf raw_flywire prepared_flywire
+      - name: Worm, C. elegans (Varshney et al. 2011, CC BY; OpenWorm)
+        run: |
+          bash tools/fetch_worm.sh raw_worm
+          python tools/prepare_worm.py --raw raw_worm --out prepared_worm
+          python tools/export_js.py --prepared prepared_worm --out data/brains/worm --config src/brains/worm.json
+      - name: Every brain loads and runs
+        run: node -e 'const {Brain}=require("./src/engine/brain");for(const id of ["malecns","flywire","worm"]){const b=new Brain("data/brains/"+id);const s=b.stimSet(Object.keys(b.stimuli)[0]);console.log(id,b.n,b.summarize(b.simulate(s,100),s).responders)}' 
       - uses: actions/upload-artifact@v4
         with:
           name: brain-data
@@ -64,13 +78,16 @@ jobs:
         with:
           files: ${{ matrix.files }}
           body: |
-            FruitGPT ${{ github.ref_name }}: chat with a real fruit fly brain (165,122 neurons) running on your computer.
+            FruitGPT ${{ github.ref_name }}: chat with real brains running on your computer, and edit them in the Brain Editor.
+            Brains included: male fruit fly (MaleCNS, 165,122 neurons), female fruit fly brain (FlyWire, 139,248 neurons) and the worm C. elegans (279 neurons).
 
             * **Linux:** `FruitGPT-*-linux-x86_64.AppImage`: `chmod +x` it and run.
             * **macOS:** `.dmg` (arm64 for Apple silicon, x64 for Intel). The app isn't notarized yet: right-click → Open the first time.
             * **Windows:** `FruitGPT-*-windows-x64.exe`: portable, no install. SmartScreen may warn because it isn't code-signed: More info → Run anyway.
 
-            Brain data: MaleCNS v1.0, HHMI Janelia (FlyEM), Google and partners, CC BY 4.0 (https://male-cns.janelia.org).
+            Brain data (see DATA_LICENSE.md): MaleCNS v1.0, HHMI Janelia (FlyEM), Google and partners, CC BY 4.0;
+            FlyWire v783, FlyWire Consortium (Dorkenwald et al. 2024, Schlegel et al. 2024), CC BY 4.0;
+            C. elegans wiring, Varshney et al. 2011, CC BY, via OpenWorm (positions: OpenWorm c302, MIT).
             Online answers come from Wikipedia (CC BY-SA 4.0) when switched on. Not affiliated with OpenAI, Janelia or Google.
       - name: Keep test build for 3 days
         if: ${{ !startsWith(github.ref, 'refs/tags/') }}

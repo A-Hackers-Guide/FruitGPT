@@ -9,23 +9,24 @@
 <body>
 <aside id="side">
   <button id="new" class="new">＋ New chat</button>
+  <button id="open-editor" class="new editor-btn">🧠 Brain Editor <span id="edited-badge" class="badge" hidden>edited</span></button>
   <div id="history"></div>
   <div class="side-foot">
     <label class="toggle"><input type="checkbox" id="online" checked> <span>Online answers</span></label>
-    <p class="tiny">When on, questions the fly can't answer from its own brain are looked up on Wikipedia (only keywords are sent).</p>
-    <p class="tiny">Brain: MaleCNS v1.0 · HHMI Janelia, Google &amp; partners · CC BY 4.0</p>
+    <p class="tiny">When on, questions the brain can't answer itself are looked up on Wikipedia (only keywords are sent).</p>
+    <p class="tiny" id="credit">Brain: MaleCNS v1.0 · HHMI Janelia, Google &amp; partners · CC BY 4.0</p>
   </div>
 </aside>
 <main>
   <header>
-    <div class="title">FruitGPT <span class="model" id="model">waking the brain…</span></div>
+    <div class="title">FruitGPT <select id="brain-pick" title="Choose a brain"></select> <span class="model" id="model">waking the brain…</span></div>
     <div class="status"><span class="dot" id="dot"></span><span id="fly">loading</span></div>
   </header>
   <section id="chat">
     <div id="empty">
       <div class="logo">🪰</div>
-      <h1>Talk to a real fruit fly brain</h1>
-      <p class="sub">165,122 neurons mapped from a real fly, running on your computer. Every reply shows what its neurons did, translated into English.</p>
+      <h1 id="empty-title">Talk to a real fruit fly brain</h1>
+      <p class="sub" id="empty-sub">165,122 neurons mapped from a real fly, running on your computer. Every reply shows what its neurons did, translated into English.</p>
       <div class="cards" id="cards"></div>
     </div>
     <div id="msgs"></div>
@@ -36,9 +37,75 @@
       <button id="send" aria-label="Send">↑</button>
     </div>
     <div class="senses" id="senses"></div>
-    <p class="tiny center">The fly can't read words: FruitGPT translates its brain activity and answers from its real connectome. It can be wrong; it's a simplified model.</p>
+    <p class="tiny center">It can't read words: FruitGPT translates its brain activity and answers from its real connectome. It can be wrong; it's a simplified model.</p>
   </form>
 </main>
-<script src="app.js"></script>
+<section id="editor" hidden>
+  <div class="ed-top">
+    <div><b>Brain Editor</b> <span class="model" id="ed-brain"></span></div>
+    <span id="ed-status" class="pill">original brain</span>
+    <div class="grow"></div>
+    <button id="ed-reset" class="ghost">Reset to original</button>
+    <button id="ed-close" class="ghost">Back to chat ✕</button>
+  </div>
+  <div class="ed-body">
+    <div class="ed-view">
+      <canvas id="view"></canvas>
+      <div id="ed-legend" class="legend"></div>
+      <div class="view-hint">drag to rotate · scroll to zoom · dim grey = taken out · yellow = forced on · orange = changed</div>
+      <div id="ed-loading" class="view-loading">loading 3D brain…</div>
+    </div>
+    <div class="ed-side">
+      <nav class="tabs" id="ed-tabs">
+        <button data-tab="brains" class="on">Brains</button><button data-tab="sections">Sections</button><button data-tab="neurons">Neurons</button>
+        <button data-tab="wires">Wires</button><button data-tab="dials">Dials</button><button data-tab="presets">Presets</button>
+      </nav>
+      <div class="pane" data-pane="brains">
+        <p class="tiny">Pick whose brain runs. Switching brains clears unsaved edits.</p>
+        <div id="ed-brains"></div>
+        <button id="ed-add-brain">＋ Add a brain file…</button>
+        <p class="tiny">A brain file (<code>.fbrain</code>) holds a whole wiring diagram. Make one from any connectome with <code>tools/pack_brain.js</code> (see the README).</p>
+      </div>
+      <div class="pane" data-pane="sections" hidden>
+        <p class="tiny">Tick a section to take it out of the brain: its neurons go silent and pass nothing on.</p>
+        <div id="ed-sections" class="checks"></div>
+      </div>
+      <div class="pane" data-pane="neurons" hidden>
+        <p class="tiny">Change neurons by cell type (e.g. <code>DNp01</code>), group (<code>nt:gaba</code>, <code>class:CX</code>), section (<code>section:eyes</code>) or ID.</p>
+        <div class="row"><input id="n-target" list="targets" placeholder="neuron type, group or ID" autocomplete="off">
+          <select id="n-action"><option value="silence">Silence</option><option value="tonic">Force on</option><option value="gain">Output ×</option><option value="flip">Flip go ↔ stop</option></select>
+          <input id="n-gain" type="number" min="0" max="10" step="0.1" value="2" title="output multiplier" hidden>
+          <button id="n-add">Add</button></div>
+        <div id="n-hint" class="tiny"></div>
+        <ul id="n-list" class="rules"></ul>
+      </div>
+      <div class="pane" data-pane="wires" hidden>
+        <p class="tiny">Change the wires from one group of neurons to another. Strength 0 cuts them; 2 doubles them.</p>
+        <div class="row"><input id="w-from" list="targets" placeholder="from" autocomplete="off"><span>→</span><input id="w-to" list="targets" placeholder="to" autocomplete="off"></div>
+        <div class="row"><label class="grow">Strength <b id="w-val">0 (cut)</b><input id="w-gain" type="range" min="0" max="5" step="0.1" value="0"></label><button id="w-add">Add</button></div>
+        <ul id="w-list" class="rules"></ul>
+      </div>
+      <div class="pane" data-pane="dials" hidden>
+        <p class="tiny">Turn the dials of the whole brain. Big changes can make it go silent or fire out of control.</p>
+        <div id="ed-dials"></div>
+        <label class="toggle" id="ed-excl-row" hidden><input type="checkbox" id="ed-excl"> <span id="ed-excl-text"></span></label>
+      </div>
+      <div class="pane" data-pane="presets" hidden>
+        <p class="tiny"><b>Edits are not kept when you close FruitGPT.</b> Save them as a preset to keep them on this computer.</p>
+        <div class="row"><input id="p-name" maxlength="60" placeholder="preset name"><button id="p-save">Save preset</button></div>
+        <div id="p-msg" class="tiny"></div>
+        <ul id="p-list" class="rules presets"></ul>
+      </div>
+      <div class="ed-foot">
+        <div id="ed-report" class="report"></div>
+        <div id="ed-result" class="result"></div>
+        <div class="tiny">Test the edited brain:</div>
+        <div id="ed-test" class="senses left"></div>
+      </div>
+    </div>
+  </div>
+  <datalist id="targets"></datalist>
+</section>
+<script type="module" src="app.js"></script>
 </body>
 </html>

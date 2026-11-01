@@ -5,3 +5,6 @@ raw/
 prepared/
 __pycache__/
 .DS_Store
+raw_*/
+prepared_*/
+*.fbrain

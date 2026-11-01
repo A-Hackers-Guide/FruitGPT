@@ -1,0 +1,218 @@
+{
+ "id": "worm",
+ "name": "Worm (C. elegans, 302-neuron nervous system)",
+ "organism": "worm",
+ "latin": "Caenorhabditis elegans",
+ "pronoun": "worm",
+ "parts": "nervous system (its 279 connected neurons)",
+ "credit": "Varshney, Chen, Paniagua, Hall & Chklovskii 2011 (PLoS Comput Biol), via OpenWorm",
+ "licence": "CC BY 4.0 (wiring); positions from OpenWorm c302, MIT",
+ "url": "https://doi.org/10.1371/journal.pcbi.1001066",
+ "params": {
+  "W_SYN": 1.5
+ },
+ "fallbackSense": "vibration",
+ "fallbackSay": "I can't read words (I don't even have eyes); to me your message was a vibration through the ground.",
+ "stimuli": {
+  "touch": {
+   "types": [
+    "ALM",
+    "AVM"
+   ],
+   "say": "a gentle touch on my head (my ALM/AVM touch neurons)",
+   "cap": 10,
+   "words": "touch|poke|tap|head|pet|stroke|tickle"
+  },
+  "tail": {
+   "types": [
+    "PLM"
+   ],
+   "say": "a touch on my tail (my PLM touch neurons)",
+   "cap": 10,
+   "words": "tail|behind|rear|back end"
+  },
+  "nose": {
+   "types": [
+    "ASH",
+    "FLP"
+   ],
+   "say": "something nasty at my nose (my ASH/FLP nociceptors)",
+   "cap": 10,
+   "words": "nose|bump|nasty|danger|pain|threat|shadow|attack|scare"
+  },
+  "smell": {
+   "types": [
+    "AWA",
+    "AWC"
+   ],
+   "say": "a tasty smell (my AWA/AWC smell neurons)",
+   "cap": 10,
+   "words": "smell|scent|odou?r|sniff|food|bacteria|banana|fruit"
+  },
+  "taste": {
+   "types": [
+    "ASE"
+   ],
+   "say": "salt (my ASE taste neurons)",
+   "cap": 4,
+   "words": "taste|salt|lick|eat|sugar|hungry"
+  },
+  "heat": {
+   "types": [
+    "AFD"
+   ],
+   "say": "a change in temperature (my AFD thermosensors)",
+   "cap": 4,
+   "words": "heat|warm|hot|cold|temperature"
+  },
+  "vibration": {
+   "types": [
+    "ALM",
+    "AVM",
+    "PLM",
+    "PVD"
+   ],
+   "say": "a vibration through the ground",
+   "cap": 12,
+   "words": "vibrat|sound|hear|noise|music|loud|shake"
+  }
+ },
+ "behaviours": [
+  {
+   "name": "backward",
+   "types": [
+    "AVA",
+    "AVD",
+    "AVE"
+   ],
+   "does": "crawl backward",
+   "word": "reversing",
+   "alarm": true,
+   "hz": 20,
+   "cite": "Chalfie et al. 1985"
+  },
+  {
+   "name": "forward",
+   "types": [
+    "AVB",
+    "PVC"
+   ],
+   "does": "crawl forward",
+   "word": "crawling forward",
+   "hz": 20,
+   "cite": "Chalfie et al. 1985"
+  }
+ ],
+ "known": {
+  "AVA": [
+   "a backward command interneuron",
+   "it drives backward crawling (Chalfie et al. 1985)"
+  ],
+  "AVB": [
+   "a forward command interneuron",
+   "it drives forward crawling (Chalfie et al. 1985)"
+  ],
+  "AVD": [
+   "a backward command interneuron",
+   "it helps trigger reversals after a head touch (Chalfie et al. 1985)"
+  ],
+  "PVC": [
+   "a forward command interneuron",
+   "it helps trigger forward crawling after a tail touch (Chalfie et al. 1985)"
+  ],
+  "ALM": [
+   "a touch receptor",
+   "it senses gentle touch on my front half (Chalfie & Sulston 1981)"
+  ],
+  "PLM": [
+   "a touch receptor",
+   "it senses gentle touch on my tail (Chalfie & Sulston 1981)"
+  ],
+  "ASH": [
+   "a nociceptor",
+   "it senses harsh touch at my nose and nasty chemicals, and makes me back off (Kaplan & Horvitz 1993)"
+  ],
+  "AFD": [
+   "a thermosensor",
+   "it senses temperature so I can find the temperature I grew up at (Mori & Ohshima 1995)"
+  ],
+  "AWC": [
+   "a smell neuron",
+   "it senses attractive odours like those of bacteria (Bargmann et al. 1993)"
+  ]
+ },
+ "sections": [
+  {
+   "id": "sensory",
+   "name": "Sensory neurons",
+   "superclass": [
+    "worm_sensory"
+   ]
+  },
+  {
+   "id": "inter",
+   "name": "Interneurons",
+   "superclass": [
+    "worm_interneuron"
+   ]
+  },
+  {
+   "id": "motor",
+   "name": "Motor neurons",
+   "superclass": [
+    "worm_motor"
+   ]
+  },
+  {
+   "id": "command",
+   "name": "Command interneurons (AVA, AVB, AVD, AVE, PVC)",
+   "types": [
+    "AVA",
+    "AVB",
+    "AVD",
+    "AVE",
+    "PVC"
+   ]
+  },
+  {
+   "id": "touch",
+   "name": "Touch receptors (ALM, AVM, PLM, PVM)",
+   "types": [
+    "ALM",
+    "AVM",
+    "PLM",
+    "PVM"
+   ]
+  },
+  {
+   "id": "cord",
+   "name": "Ventral cord motor neurons",
+   "cls": [
+    "Ventral cord motor neuron"
+   ]
+  },
+  {
+   "id": "gaba",
+   "name": "GABA (inhibitory) neurons",
+   "nt": [
+    "gaba"
+   ]
+  },
+  {
+   "id": "left",
+   "name": "Left side",
+   "side": [
+    "L"
+   ]
+  },
+  {
+   "id": "right",
+   "name": "Right side",
+   "side": [
+    "R"
+   ]
+  }
+ ],
+ "decide": "strongest",
+ "simNote": "C. elegans neurons mostly signal with graded voltages rather than spikes, so a spiking model is a rough approximation here; gap junctions are modelled as weak excitatory links."
+}

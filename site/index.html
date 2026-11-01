@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>FruitGPT</title>
-<meta name="description" content="Chat with a real fruit fly brain: 165,122 neurons running on your computer, translated into English.">
+<meta name="description" content="Chat with real brains (two fruit flies and a worm) running on your computer, translated into English, and edit them in the Brain Editor.">
 <link rel="icon" href="icon.png">
 <style>
   :root { --bg:#0f1115; --panel:#171a21; --line:#262b36; --text:#ececf1; --muted:#9097a6; --accent:#ff6b4a; --accent2:#ffd166; color-scheme: dark; }
@@ -48,6 +48,7 @@
     <div class="brand"><img src="icon.png" alt="">FruitGPT</div>
     <div class="grow"></div>
     <a href="#how">How it works</a>
+    <a href="#editor">Brain Editor</a>
     <a href="#download">Download</a>
     <a href="https://github.com/A-Hackers-Guide/FruitGPT">GitHub</a>
   </nav>
@@ -55,7 +56,7 @@
   <section class="hero">
     <h1>Chat with a <em>real fruit fly brain</em>.</h1>
     <p class="lead">FruitGPT runs all 165,122 neurons of a real fly's nervous system on your computer, lets the fly feel
-      your messages, and translates what its neurons do into English.</p>
+      your messages, and translates what its neurons do into English. Then open the Brain Editor and change its brain.</p>
     <div class="dl">
       <a class="btn primary" href="https://github.com/A-Hackers-Guide/FruitGPT/releases/latest">Download FruitGPT<small>Windows · macOS · Linux</small></a>
       <a class="btn ghost" href="https://github.com/A-Hackers-Guide/FruitGPT">Source code<small>MIT licence</small></a>
@@ -71,6 +72,29 @@
       <div class="card"><div class="n">2 · THINK</div><h3>The real brain runs</h3><p>300 ms of the full wiring diagram (25.6 million connections) simulated on your CPU, spike by spike, from the MaleCNS connectome.</p></div>
       <div class="card"><div class="n">3 · TRANSLATE</div><h3>Fly → English</h3><p>FruitGPT reports which neurons answered, in which brain regions, and which command neurons told the body to move.</p></div>
     </div>
+  </section>
+
+  <section id="editor">
+    <h2>Brain Editor: change the brain, watch what happens</h2>
+    <img class="shot" style="margin-top:0" src="shot-editor.jpg" alt="The Brain Editor: a 3D view of 165,122 fly neurons with the left optic lobe greyed out, the Giant Fiber silenced, and the fly reporting that a shadow no longer makes it jump.">
+    <div class="steps" style="margin-top:18px">
+      <div class="card"><div class="n">TAKE OUT</div><h3>Remove whole sections</h3><p>Optic lobes, mushroom bodies, the nerve cord, one half of the brain… They go dark in the 3D view and silent in the simulation.</p></div>
+      <div class="card"><div class="n">REWIRE</div><h3>Edit neurons and wires</h3><p>Silence the Giant Fiber, force the moonwalker neurons on, flip a neuron from "go" to "stop", or cut the wires from the looming detectors.</p></div>
+      <div class="card"><div class="n">TUNE</div><h3>Turn the dials</h3><p>Synapse strength, firing threshold, fatigue, noise. Then test it: the fly tells you what changed in how it reacts.</p></div>
+    </div>
+    <p>Edits are temporary: close FruitGPT and the brain is back to normal. <b>Save a preset</b> to keep one on your computer.
+      Built-in examples include <i>No escape</i>, <i>Moonwalker</i> and <i>No eyes</i>.</p>
+  </section>
+
+  <section>
+    <h2>Three brains, and room for more</h2>
+    <table>
+      <tr><th>Brain</th><th>Neurons</th><th>Source</th></tr>
+      <tr><td>Male fruit fly, whole nervous system</td><td>165,122</td><td>MaleCNS v1.0 (HHMI Janelia, Google and partners)</td></tr>
+      <tr><td>Female fruit fly, whole brain</td><td>139,248</td><td>FlyWire v783 (FlyWire Consortium)</td></tr>
+      <tr><td>Worm, <i>C. elegans</i></td><td>279</td><td>Varshney et al. 2011, via OpenWorm</td></tr>
+    </table>
+    <p class="note">Any other connectome can be packed into one <code>.fbrain</code> file and added with "Add a brain file…". See the README.</p>
   </section>
 
   <section>
@@ -112,8 +136,10 @@
   <footer>
     Brain data: MaleCNS v1.0, HHMI Janelia (FlyEM), Google and collaborators,
     <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a> · <a href="https://male-cns.janelia.org">male-cns.janelia.org</a>.
-    Online answers: Wikipedia, CC BY-SA 4.0. FruitGPT code: MIT. FruitGPT is an independent project, not affiliated with OpenAI,
-    HHMI Janelia, Google or the Wikimedia Foundation.
+    FlyWire v783, FlyWire Consortium (Dorkenwald et al. 2024, Schlegel et al. 2024), CC BY 4.0.
+    C. elegans wiring: Varshney et al. 2011 (CC BY) via OpenWorm; positions: OpenWorm c302 (MIT).
+    Online answers: Wikipedia, CC BY-SA 4.0. FruitGPT code: MIT. 3D view: three.js (MIT). FruitGPT is an independent project, not affiliated with OpenAI,
+    HHMI Janelia, Google, FlyWire, OpenWorm or the Wikimedia Foundation.
   </footer>
 </div>
 </body>

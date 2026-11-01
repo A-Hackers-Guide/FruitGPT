@@ -1,0 +1,236 @@
+{
+ "id": "malecns",
+ "name": "Male fruit fly (MaleCNS v1.0)",
+ "organism": "fruit fly",
+ "latin": "Drosophila melanogaster",
+ "parts": "whole nervous system: brain and nerve cord",
+ "credit": "MaleCNS v1.0, HHMI Janelia (FlyEM), Google and collaborators",
+ "licence": "CC BY 4.0",
+ "url": "https://male-cns.janelia.org",
+ "simExclude": {
+  "typePrefix": "KC",
+  "why": "Kenyon-cell-to-Kenyon-cell synapses (mostly axo-axonal) make point-neuron models run away"
+ },
+ "fallbackSense": "hearing",
+ "fallbackSay": "I can't read words; to me your message was a sound near my antennae.",
+ "stimuli": {
+  "smell": {
+   "types": [
+    "ORN_DA1"
+   ],
+   "say": "a puff of fly scent (my DA1 smell channel)",
+   "cap": 100
+  },
+  "taste": {
+   "types": [
+    "claw_tpGRN"
+   ],
+   "say": "something touching the taste hairs on my feet",
+   "cap": 60
+  },
+  "loom": {
+   "types": [
+    "LPLC2",
+    "LC4"
+   ],
+   "say": "a dark shadow rushing toward me",
+   "cap": 150
+  },
+  "hearing": {
+   "subclass": [
+    "auditory"
+   ],
+   "say": "a sound near my antennae",
+   "cap": 100
+  },
+  "wind": {
+   "subclass": [
+    "wind_gravity"
+   ],
+   "say": "a gust of wind",
+   "cap": 100
+  },
+  "touch": {
+   "types": [
+    "SNta29"
+   ],
+   "say": "a touch on my body hairs",
+   "cap": 100
+  },
+  "heat": {
+   "cls": [
+    "thermosensory"
+   ],
+   "say": "a warm spot",
+   "cap": 25
+  },
+  "humidity": {
+   "cls": [
+    "hygrosensory"
+   ],
+   "say": "damp air",
+   "cap": 66
+  }
+ },
+ "behaviours": [
+  {
+   "name": "escape",
+   "types": [
+    "DNp01"
+   ],
+   "does": "jump and take off",
+   "word": "ESCAPING (Giant Fiber firing)",
+   "alarm": true,
+   "hz": 20,
+   "cite": "von Reyn et al. 2014"
+  },
+  {
+   "name": "backward",
+   "types": [
+    "MDN"
+   ],
+   "does": "walk backward",
+   "word": "walking backward",
+   "hz": 20,
+   "cite": "Bidaye et al. 2014"
+  },
+  {
+   "name": "turn",
+   "types": [
+    "DNa01",
+    "DNa02"
+   ],
+   "does": "turn",
+   "word": "turning",
+   "sided": true,
+   "hz": 20,
+   "cite": "Rayshubskiy et al. 2020; Yang et al. 2023"
+  },
+  {
+   "name": "forward",
+   "types": [
+    "DNp09"
+   ],
+   "does": "walk forward",
+   "word": "walking forward",
+   "hz": 20,
+   "cite": "Bidaye et al. 2020"
+  }
+ ],
+ "sections": [
+  {
+   "id": "eyes",
+   "name": "Optic lobes (vision)",
+   "superclass": [
+    "ol_intrinsic",
+    "ol_sensory",
+    "visual_projection",
+    "visual_centrifugal"
+   ]
+  },
+  {
+   "id": "eye_left",
+   "name": "Left optic lobe",
+   "superclass": [
+    "ol_intrinsic",
+    "ol_sensory",
+    "visual_projection",
+    "visual_centrifugal"
+   ],
+   "side": [
+    "L"
+   ]
+  },
+  {
+   "id": "eye_right",
+   "name": "Right optic lobe",
+   "superclass": [
+    "ol_intrinsic",
+    "ol_sensory",
+    "visual_projection",
+    "visual_centrifugal"
+   ],
+   "side": [
+    "R"
+   ]
+  },
+  {
+   "id": "central",
+   "name": "Central brain",
+   "superclass": [
+    "cb_intrinsic"
+   ]
+  },
+  {
+   "id": "mushroom",
+   "name": "Mushroom bodies (learning & memory)",
+   "cls": [
+    "Kenyon_Cell",
+    "MBON",
+    "DAN"
+   ]
+  },
+  {
+   "id": "cx",
+   "name": "Central complex (navigation)",
+   "cls": [
+    "CX"
+   ]
+  },
+  {
+   "id": "antennal",
+   "name": "Antennal lobe (smell)",
+   "cls": [
+    "ALPN",
+    "ALLN",
+    "ALIN",
+    "ALON",
+    "olfactory"
+   ]
+  },
+  {
+   "id": "descending",
+   "name": "Descending neurons (brain → body)",
+   "superclass": [
+    "descending_neuron"
+   ]
+  },
+  {
+   "id": "ascending",
+   "name": "Ascending neurons (body → brain)",
+   "superclass": [
+    "ascending_neuron"
+   ]
+  },
+  {
+   "id": "cord",
+   "name": "Nerve cord (body)",
+   "superclass": [
+    "vnc_intrinsic",
+    "vnc_motor",
+    "vnc_sensory",
+    "vnc_efferent",
+    "vnc_endocrine"
+   ]
+  },
+  {
+   "id": "sensory",
+   "name": "All sensory neurons",
+   "superclassContains": "sensory"
+  },
+  {
+   "id": "left",
+   "name": "Left half",
+   "side": [
+    "L"
+   ]
+  },
+  {
+   "id": "right",
+   "name": "Right half",
+   "side": [
+    "R"
+   ]
+  }
+ ]
+}

@@ -1,8 +1,8 @@
 {
   "name": "fruitgpt",
   "productName": "FruitGPT",
-  "version": "0.1.0",
-  "description": "Chat with a real fruit fly brain: 165,122 neurons running on your computer, translated into English.",
+  "version": "0.2.0",
+  "description": "Chat with real brains (fruit flies and a worm) running on your computer, translated into English, and edit them.",
   "main": "src/main.js",
   "license": "MIT",
   "author": "FruitGPT contributors",

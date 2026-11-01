@@ -1,7 +1,7 @@
 """Convert the prepared brain (brain.npz + meta.json from prepare_data.py) into flat little-endian
 binary files the JavaScript engine can load straight into typed arrays.
 
-    python3 tools/export_js.py --prepared PREPARED_DIR --out data
+    python3 tools/export_js.py --prepared PREPARED_DIR --out data/brains/malecns --config src/brains/malecns.json
 """
 import argparse
 import json
@@ -20,6 +20,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--prepared", required=True)
     ap.add_argument("--out", required=True)
+    ap.add_argument("--config", help="the brain's config.json (senses, command neurons, sections)")
     a = ap.parse_args()
     os.makedirs(a.out, exist_ok=True)
     z = np.load(os.path.join(a.prepared, "brain.npz"))
@@ -27,8 +28,10 @@ def main():
     for name, dt in FILES.items():
         z[name].astype(dt).tofile(os.path.join(a.out, f"{name}.bin"))
     shutil.copy(os.path.join(a.prepared, "meta.json"), os.path.join(a.out, "meta.json"))
+    if a.config:
+        shutil.copy(a.config, os.path.join(a.out, "config.json"))
     total = sum(os.path.getsize(os.path.join(a.out, f)) for f in os.listdir(a.out))
-    print(f"exported {len(FILES)} arrays + meta.json, {total / 1e6:.0f} MB")
+    print(f"exported {len(FILES)} arrays + meta.json to {a.out}, {total / 1e6:.0f} MB")
 
 
 if __name__ == "__main__":
