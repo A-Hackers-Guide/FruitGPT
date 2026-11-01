@@ -10,7 +10,7 @@
   "repository": "github:A-Hackers-Guide/FruitGPT",
   "scripts": {
     "start": "electron .",
-    "test": "node --test test/",
+    "test": "node --test test/engine.test.js",
     "dist:linux": "electron-builder --linux AppImage --publish never",
     "dist:mac": "electron-builder --mac dmg zip --x64 --arm64 --publish never",
     "dist:win": "electron-builder --win portable --x64 --publish never"
