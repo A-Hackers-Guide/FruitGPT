@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FruitGPT</title>
+<meta name="description" content="Chat with a real fruit fly brain: 165,122 neurons running on your computer, translated into English.">
+<link rel="icon" href="icon.png">
+<style>
+  :root { --bg:#0f1115; --panel:#171a21; --line:#262b36; --text:#ececf1; --muted:#9097a6; --accent:#ff6b4a; --accent2:#ffd166; color-scheme: dark; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--text); font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; }
+  a { color: var(--accent2); }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 16px; }
+  nav { display:flex; align-items:center; gap:18px; padding:16px 0; }
+  nav .brand { display:flex; align-items:center; gap:10px; font-weight:800; font-size:20px; }
+  nav .brand img { width:32px; height:32px; }
+  nav .grow { flex:1; } nav a { color:var(--muted); text-decoration:none; } nav a:hover { color:var(--text); }
+  .hero { text-align:center; padding:40px 0 24px; }
+  h1 { font-size: clamp(36px, 7vw, 64px); line-height:1.05; margin:0 0 16px; letter-spacing:-0.02em; }
+  h1 em { font-style:normal; color:var(--accent); }
+  .lead { font-size:19px; color:#c7cbd6; max-width:720px; margin:0 auto 26px; }
+  .dl { display:flex; gap:10px; justify-content:center; flex-wrap:wrap; }
+  .btn { display:inline-flex; flex-direction:column; align-items:center; padding:12px 22px; border-radius:12px; font-weight:700; text-decoration:none; min-width:170px; }
+  .btn small { font-weight:400; font-size:12px; opacity:.8; }
+  .btn.primary { background:var(--accent); color:#111; } .btn.ghost { border:1px solid var(--line); color:var(--text); background:var(--panel); }
+  .note { font-size:13px; color:var(--muted); margin-top:12px; }
+  .shot { width:100%; border-radius:16px; border:1px solid var(--line); display:block; margin-top:36px; box-shadow:0 30px 80px rgba(0,0,0,.5); }
+  h2 { font-size:28px; margin:64px 0 16px; }
+  .steps { display:grid; grid-template-columns: repeat(3,1fr); gap:14px; }
+  .card { background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:18px; }
+  .card .n { color:var(--accent); font-weight:800; font-size:13px; letter-spacing:.08em; }
+  .card h3 { margin:4px 0 6px; font-size:17px; } .card p { margin:0; color:#c7cbd6; font-size:15px; }
+  .two { display:grid; grid-template-columns: 1fr 1fr; gap:24px; align-items:center; }
+  .two img { width:100%; border-radius:14px; border:1px solid var(--line); }
+  ul.clean { padding-left:20px; color:#c7cbd6; } ul.clean li { margin:6px 0; }
+  table { width:100%; border-collapse:collapse; font-size:15px; }
+  td, th { text-align:left; padding:9px 10px; border-bottom:1px solid var(--line); vertical-align:top; }
+  th { color:var(--muted); font-weight:600; }
+  code { background:#232838; padding:2px 6px; border-radius:6px; font-size:14px; }
+  footer { margin:64px 0 32px; color:var(--muted); font-size:14px; border-top:1px solid var(--line); padding-top:20px; }
+  @media (max-width: 800px) { .steps, .two { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav>
+    <div class="brand"><img src="icon.png" alt="">FruitGPT</div>
+    <div class="grow"></div>
+    <a href="#how">How it works</a>
+    <a href="#download">Download</a>
+    <a href="https://github.com/A-Hackers-Guide/FruitGPT">GitHub</a>
+  </nav>
+
+  <section class="hero">
+    <h1>Chat with a <em>real fruit fly brain</em>.</h1>
+    <p class="lead">FruitGPT runs all 165,122 neurons of a real fly's nervous system on your computer, lets the fly feel
+      your messages, and translates what its neurons do into English.</p>
+    <div class="dl">
+      <a class="btn primary" href="https://github.com/A-Hackers-Guide/FruitGPT/releases/latest">Download FruitGPT<small>Windows · macOS · Linux</small></a>
+      <a class="btn ghost" href="https://github.com/A-Hackers-Guide/FruitGPT">Source code<small>MIT licence</small></a>
+    </div>
+    <p class="note">Free · Works offline · No account · No GPU · No language model, nothing made up</p>
+    <img class="shot" src="shot-shadow.jpg" alt="FruitGPT window: the user writes 'Here comes a shadow!' and the fly replies 'Whoa! I felt a dark shadow rushing toward me. My Giant Fiber (DNp01) fired: I'm jumping away!' with a panel translating its neural activity and a spike chart.">
+  </section>
+
+  <section id="how">
+    <h2>How it works</h2>
+    <div class="steps">
+      <div class="card"><div class="n">1 · FEEL</div><h3>The fly feels your message</h3><p>Flies can't read. Sense words drive a real sense: "shadow" fires looming detectors, "smell" an olfactory channel. Anything else reaches the fly as a sound near its antennae.</p></div>
+      <div class="card"><div class="n">2 · THINK</div><h3>The real brain runs</h3><p>300 ms of the full wiring diagram (25.6 million connections) simulated on your CPU, spike by spike, from the MaleCNS connectome.</p></div>
+      <div class="card"><div class="n">3 · TRANSLATE</div><h3>Fly → English</h3><p>FruitGPT reports which neurons answered, in which brain regions, and which command neurons told the body to move.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Ask it anything</h2>
+    <div class="two">
+      <div>
+        <ul class="clean">
+          <li><b>About itself:</b> "How many neurons do you have?", "Tell me about MDN", "What is GABA?" Answers are computed from its own connectome.</li>
+          <li><b>Make it feel things:</b> shadow, smell, taste, sound, wind, touch, heat, humidity. Watch its brain decide what to do.</li>
+          <li><b>Everything else:</b> with <i>Online answers</i> on, general questions are looked up on Wikipedia, clearly labelled and linked. Only the question's keywords are sent.</li>
+          <li><b>Always:</b> a "Fly → English" panel with what its neurons did and a spike-activity chart.</li>
+        </ul>
+      </div>
+      <img src="shot-question.jpg" alt="FruitGPT answering 'What is a neuron?' with a Wikipedia summary labelled as not from the fly's brain, plus the fly's neural activity translated into English.">
+    </div>
+  </section>
+
+  <section id="download">
+    <h2>Download</h2>
+    <table>
+      <tr><th>System</th><th>File</th><th>First run</th></tr>
+      <tr><td>Windows 10/11</td><td><code>FruitGPT-…-windows-x64.exe</code> (portable)</td><td>Not code-signed yet: SmartScreen → <i>More info</i> → <i>Run anyway</i></td></tr>
+      <tr><td>macOS (Apple silicon / Intel)</td><td><code>FruitGPT-…-mac-arm64.dmg</code> / <code>-x64.dmg</code></td><td>Not notarized yet: right-click the app → <i>Open</i></td></tr>
+      <tr><td>Linux</td><td><code>FruitGPT-…-linux-x86_64.AppImage</code></td><td><code>chmod +x</code> it, then run</td></tr>
+    </table>
+    <p class="note">All downloads are on <a href="https://github.com/A-Hackers-Guide/FruitGPT/releases/latest">GitHub Releases</a>. About 1 GB of free RAM needed.
+      The background fly uses at most about 30% of one CPU core, and none while the window is minimised.</p>
+  </section>
+
+  <section>
+    <h2>Honest about the science</h2>
+    <p>The brain is the <b>MaleCNS v1.0</b> connectome (HHMI Janelia, Google and collaborators, <i>Cell</i> 2026), run as a
+      leaky integrate-and-fire network after Shiu et al. 2024 (<i>Nature</i>). It's a simplified model: no dopamine or other
+      slow chemicals, no gap junctions, no body, no learning. And the fly doesn't understand language: FruitGPT translates what
+      its neurons <i>do</i>. Want the whole operating system built around this brain? See
+      <a href="https://a-hackers-guide.github.io/FruitOS/">FruitOS</a>.</p>
+  </section>
+
+  <footer>
+    Brain data: MaleCNS v1.0, HHMI Janelia (FlyEM), Google and collaborators,
+    <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a> · <a href="https://male-cns.janelia.org">male-cns.janelia.org</a>.
+    Online answers: Wikipedia, CC BY-SA 4.0. FruitGPT code: MIT. FruitGPT is an independent project, not affiliated with OpenAI,
+    HHMI Janelia, Google or the Wikimedia Foundation.
+  </footer>
+</div>
+</body>
+</html>

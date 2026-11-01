@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:">
+<title>FruitGPT</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<aside id="side">
+  <button id="new" class="new">＋ New chat</button>
+  <div id="history"></div>
+  <div class="side-foot">
+    <label class="toggle"><input type="checkbox" id="online" checked> <span>Online answers</span></label>
+    <p class="tiny">When on, questions the fly can't answer from its own brain are looked up on Wikipedia (only keywords are sent).</p>
+    <p class="tiny">Brain: MaleCNS v1.0 · HHMI Janelia, Google &amp; partners · CC BY 4.0</p>
+  </div>
+</aside>
+<main>
+  <header>
+    <div class="title">FruitGPT <span class="model" id="model">waking the brain…</span></div>
+    <div class="status"><span class="dot" id="dot"></span><span id="fly">loading</span></div>
+  </header>
+  <section id="chat">
+    <div id="empty">
+      <div class="logo">🪰</div>
+      <h1>Talk to a real fruit fly brain</h1>
+      <p class="sub">165,122 neurons mapped from a real fly, running on your computer. Every reply shows what its neurons did, translated into English.</p>
+      <div class="cards" id="cards"></div>
+    </div>
+    <div id="msgs"></div>
+  </section>
+  <form id="form">
+    <div class="box">
+      <textarea id="input" rows="1" placeholder="Message the fly…"></textarea>
+      <button id="send" aria-label="Send">↑</button>
+    </div>
+    <div class="senses" id="senses"></div>
+    <p class="tiny center">The fly can't read words: FruitGPT translates its brain activity and answers from its real connectome. It can be wrong; it's a simplified model.</p>
+  </form>
+</main>
+<script src="app.js"></script>
+</body>
+</html>

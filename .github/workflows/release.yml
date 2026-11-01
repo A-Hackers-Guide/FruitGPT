@@ -1,0 +1,81 @@
+name: Release apps
+# Push a tag like v0.1.0: builds FruitGPT for Linux (AppImage), macOS (.app in .dmg/.zip) and Windows (.exe)
+# and attaches them to a GitHub Release. Built apps are never committed to the source tree.
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  data:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install numpy scipy pandas pyarrow
+      - name: Download and convert the MaleCNS connectome (CC BY 4.0)
+        run: |
+          bash tools/fetch_data.sh raw
+          python tools/prepare_data.py --raw raw --out prepared
+          python tools/export_js.py --prepared prepared --out data
+      - uses: actions/upload-artifact@v4
+        with:
+          name: brain-data
+          path: data/
+          retention-days: 1
+
+  build:
+    needs: data
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+            script: dist:linux
+            files: dist/*.AppImage
+          - os: macos-latest
+            script: dist:mac
+            files: |
+              dist/*.dmg
+              dist/*.zip
+          - os: windows-latest
+            script: dist:win
+            files: dist/*.exe
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: actions/download-artifact@v4
+        with:
+          name: brain-data
+          path: data
+      - run: npm ci --ignore-scripts
+      - run: npm run ${{ matrix.script }}
+        env:
+          CSC_IDENTITY_AUTO_DISCOVERY: "false"
+      - name: Publish to the release
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: ${{ matrix.files }}
+          body: |
+            FruitGPT ${{ github.ref_name }}: chat with a real fruit fly brain (165,122 neurons) running on your computer.
+
+            * **Linux:** `FruitGPT-*-linux-x86_64.AppImage`: `chmod +x` it and run.
+            * **macOS:** `.dmg` (arm64 for Apple silicon, x64 for Intel). The app isn't notarized yet: right-click → Open the first time.
+            * **Windows:** `FruitGPT-*-windows-x64.exe`: portable, no install. SmartScreen may warn because it isn't code-signed: More info → Run anyway.
+
+            Brain data: MaleCNS v1.0, HHMI Janelia (FlyEM), Google and partners, CC BY 4.0 (https://male-cns.janelia.org).
+            Online answers come from Wikipedia (CC BY-SA 4.0) when switched on. Not affiliated with OpenAI, Janelia or Google.
+      - name: Keep test build for 3 days
+        if: ${{ !startsWith(github.ref, 'refs/tags/') }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: fruitgpt-${{ matrix.os }}
+          path: ${{ matrix.files }}
+          retention-days: 3
