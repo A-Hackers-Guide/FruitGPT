@@ -1,5 +1,8 @@
 # FruitGPT
 
+[![Download FruitGPT](https://img.shields.io/sourceforge/dt/fruitgpt.svg?label=SourceForge%20downloads)](https://sourceforge.net/projects/fruitgpt/files/latest/download) [![Download FruitGPT](https://a.fsdn.com/con/app/sf-download-button)](https://sourceforge.net/projects/fruitgpt/files/latest/download)
+
+
 **Chat with real brains, and edit them.** FruitGPT is a desktop app with a chat interface that runs complete
 wiring diagrams (connectomes) on your own computer and translates what their neurons do into English. It ships with three brains:
 
